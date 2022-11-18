@@ -5,3 +5,4 @@ less
 logrotate
 openssh
 ssmtp
+open-vm-tools

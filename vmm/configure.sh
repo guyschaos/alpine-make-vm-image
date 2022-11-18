@@ -33,5 +33,8 @@ rc-update add net.eth0 default
 rc-update add net.lo boot
 rc-update add termencoding boot
 
+# install vm tools
+rc-update add open-vm-tools boot
+
 step 'List /usr/local/bin'
 ls -la /usr/local/bin
