@@ -5,4 +5,4 @@ less
 logrotate
 openssh
 ssmtp
-open-vm-tools
+qemu-guest-agent

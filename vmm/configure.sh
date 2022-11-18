@@ -34,7 +34,7 @@ rc-update add net.lo boot
 rc-update add termencoding boot
 
 # install vm tools
-rc-update add open-vm-tools boot
+rc-update add qemu-guest-agent boot
 
 step 'List /usr/local/bin'
 ls -la /usr/local/bin
