@@ -13,7 +13,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install qemu-utils
 
-      - uses: actions/checkout@v2.5.0
+      - uses: actions/checkout@v3
 
       - name: Build image
         run: |
@@ -27,7 +27,9 @@ jobs:
               --script-chroot \
               alpine.qcow2 -- ./vmm/configure.sh
       
+      - name: Tar files
+        run: tar -czf alpine.tar.gz alpine.qcow2
+
       - uses: actions/upload-artifact@v3
         with:
-          name: image
-          path: alpine.qcow2
+          path: alpine.tar.gz
