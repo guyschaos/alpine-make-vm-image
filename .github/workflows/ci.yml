@@ -5,7 +5,7 @@ on:
   - workflow_dispatch
 
 jobs:
-  test:
+  alpine-builder:
     runs-on: ubuntu-latest
     steps:
       - name: Install qemu-utils
@@ -26,3 +26,8 @@ jobs:
               --fs-skel-chown root:root \
               --script-chroot \
               alpine.qcow2 -- ./vmm/configure.sh
+      
+      - uses: actions/upload-artifact@v3
+        with:
+          name: image
+          path: alpine.qcow2
