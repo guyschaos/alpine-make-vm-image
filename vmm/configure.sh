@@ -8,7 +8,10 @@ step() {
 
 
 step 'Set up timezone'
-setup-timezone -z Europe/Prague
+setup-timezone -z Asia/Shanghai
+
+step 'Load tun device on boot'
+echo "tun" >>/etc/modules
 
 step 'Set up networking'
 cat > /etc/network/interfaces <<-EOF
