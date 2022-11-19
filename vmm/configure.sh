@@ -16,10 +16,18 @@ echo "tun" >>/etc/modules
 step 'Set up networking'
 cat > /etc/network/interfaces <<-EOF
 	iface lo inet loopback
-	iface eth0 inet dhcp
+	iface eth0 inet static
+		address 192.168.2.222/24
+		gateway 192.168.2.1
+		hostname nixcraft-x140e
 EOF
 ln -s networking /etc/init.d/net.lo
 ln -s networking /etc/init.d/net.eth0
+
+cat > /etc/resolv.conf <<-EOF
+nameserver 192.168.2.1
+nameserver 192.168.1.1
+EOF
 
 step 'Adjust rc.conf'
 sed -Ei \
