@@ -6,3 +6,7 @@ logrotate
 openssh
 ssmtp
 qemu-guest-agent
+vim
+docker
+docker-cli-compose
+iptables

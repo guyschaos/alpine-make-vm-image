@@ -38,6 +38,7 @@ rc-update add termencoding boot
 
 # install vm tools
 rc-update add qemu-guest-agent boot
+rc-update add docker
 
 step 'List /usr/local/bin'
 ls -la /usr/local/bin
