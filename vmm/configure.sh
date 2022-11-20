@@ -50,3 +50,6 @@ rc-update add docker
 
 step 'List /usr/local/bin'
 ls -la /usr/local/bin
+
+step 'chmod /mydata'
+chmod 777 /mydata
