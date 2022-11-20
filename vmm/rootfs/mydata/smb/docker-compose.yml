@@ -1,0 +1,15 @@
+version: "3.5"
+
+services:
+  samba:
+    image: crazymax/samba
+    container_name: samba
+    network_mode: host
+    volumes:
+      - "./data:/data"
+      - "/mydata:/samba/public"
+
+    environment:
+      - "TZ=Asia/Shanghai"
+      - "SAMBA_LOG_LEVEL=0"
+    restart: always
