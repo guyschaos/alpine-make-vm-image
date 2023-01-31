@@ -19,7 +19,7 @@ jobs:
         run: |
           sudo ./alpine-make-vm-image \
               --image-format qcow2 \
-              --image-size 2G \
+              --image-size 4G \
               --repositories-file example/repositories \
               --packages "$(cat example/packages)" \
               --fs-skel-dir example/rootfs \
