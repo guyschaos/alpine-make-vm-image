@@ -1,4 +1,4 @@
-name: CI
+name: Gateway
 on:
   - pull_request
   - push
@@ -20,11 +20,11 @@ jobs:
           sudo ./alpine-make-vm-image \
               --image-format qcow2 \
               --image-size 2G \
-              --packages "$(cat gatewaypackages)" \
-              --fs-skel-dir gatewayrootfs \
+              --packages "$(cat gateway/packages)" \
+              --fs-skel-dir gateway/rootfs \
               --fs-skel-chown root:root \
               --script-chroot \
-              alpine-bios-$(date +%Y-%m-%d).qcow2 -- ./gatewayconfigure.sh
+              alpine-bios-$(date +%Y-%m-%d).qcow2 -- ./gateway/configure.sh
 
       - name: Build image for x86_64 with BIOS mode and GPT
         run: |
@@ -32,11 +32,11 @@ jobs:
               --image-format raw \
               --image-size 2G \
               --partition \
-              --packages "$(cat gatewaypackages)" \
-              --fs-skel-dir gatewayrootfs \
+              --packages "$(cat gateway/packages)" \
+              --fs-skel-dir gateway/rootfs \
               --fs-skel-chown root:root \
               --script-chroot \
-              alpine-bios-part-$(date +%Y-%m-%d).raw -- ./gatewayconfigure.sh
+              alpine-bios-part-$(date +%Y-%m-%d).raw -- ./gateway/configure.sh
 
       - name: Build image for x86_64 with UEFI mode
         run: |
@@ -44,10 +44,10 @@ jobs:
               --image-format qcow2 \
               --image-size 2G \
               --boot-mode UEFI \
-              --packages "$(cat gatewaypackages)" \
-              --fs-skel-dir gatewayrootfs \
+              --packages "$(cat gateway/packages)" \
+              --fs-skel-dir gateway/rootfs \
               --fs-skel-chown root:root \
               --script-chroot \
-              alpine-uefi-$(date +%Y-%m-%d).qcow2 -- ./gatewayconfigure.sh
+              alpine-uefi-$(date +%Y-%m-%d).qcow2 -- ./gateway/configure.sh
 
 
