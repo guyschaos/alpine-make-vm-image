@@ -41,4 +41,5 @@ step 'List /usr/local/bin'
 ls -la /usr/local/bin
 
 step 'Pull image'
+rc-service docker start
 docker pull mzz2017/v2raya
