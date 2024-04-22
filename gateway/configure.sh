@@ -39,3 +39,6 @@ rc-update add docker
 
 step 'List /usr/local/bin'
 ls -la /usr/local/bin
+
+step 'Pull image'
+docker pull mzz2017/v2raya
