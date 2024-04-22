@@ -1,0 +1,53 @@
+name: CI
+on:
+  - pull_request
+  - push
+
+jobs:
+  build-with-ubuntu:
+    name: Test on Ubuntu
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install qemu-utils
+        run: |
+          sudo apt-get update
+          sudo apt-get install qemu-utils
+
+      - uses: actions/checkout@v3
+
+      - name: Build image for x86_64 with BIOS mode and without GPT
+        run: |
+          sudo ./alpine-make-vm-image \
+              --image-format qcow2 \
+              --image-size 2G \
+              --packages "$(cat gatewaypackages)" \
+              --fs-skel-dir gatewayrootfs \
+              --fs-skel-chown root:root \
+              --script-chroot \
+              alpine-bios-$(date +%Y-%m-%d).qcow2 -- ./gatewayconfigure.sh
+
+      - name: Build image for x86_64 with BIOS mode and GPT
+        run: |
+          sudo ./alpine-make-vm-image \
+              --image-format raw \
+              --image-size 2G \
+              --partition \
+              --packages "$(cat gatewaypackages)" \
+              --fs-skel-dir gatewayrootfs \
+              --fs-skel-chown root:root \
+              --script-chroot \
+              alpine-bios-part-$(date +%Y-%m-%d).raw -- ./gatewayconfigure.sh
+
+      - name: Build image for x86_64 with UEFI mode
+        run: |
+          sudo ./alpine-make-vm-image \
+              --image-format qcow2 \
+              --image-size 2G \
+              --boot-mode UEFI \
+              --packages "$(cat gatewaypackages)" \
+              --fs-skel-dir gatewayrootfs \
+              --fs-skel-chown root:root \
+              --script-chroot \
+              alpine-uefi-$(date +%Y-%m-%d).qcow2 -- ./gatewayconfigure.sh
+
+

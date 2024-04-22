@@ -1,0 +1,13 @@
+chrony
+doas
+doas-sudo-shim
+less
+logrotate
+openssh
+ssmtp
+qemu-guest-agent
+vim
+docker
+docker-cli-compose
+docker-compose
+iptables
