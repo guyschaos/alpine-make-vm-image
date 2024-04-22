@@ -15,28 +15,28 @@ jobs:
 
       - uses: actions/checkout@v3
 
-      - name: Build image for x86_64 with BIOS mode and without GPT
-        run: |
-          sudo ./alpine-make-vm-image \
-              --image-format qcow2 \
-              --image-size 2G \
-              --packages "$(cat gateway/packages)" \
-              --fs-skel-dir gateway/rootfs \
-              --fs-skel-chown root:root \
-              --script-chroot \
-              alpine-bios-$(date +%Y-%m-%d).qcow2 -- ./gateway/configure.sh
+      # - name: Build image for x86_64 with BIOS mode and without GPT
+      #   run: |
+      #     sudo ./alpine-make-vm-image \
+      #         --image-format qcow2 \
+      #         --image-size 2G \
+      #         --packages "$(cat gateway/packages)" \
+      #         --fs-skel-dir gateway/rootfs \
+      #         --fs-skel-chown root:root \
+      #         --script-chroot \
+      #         alpine-bios-$(date +%Y-%m-%d).qcow2 -- ./gateway/configure.sh
 
-      - name: Build image for x86_64 with BIOS mode and GPT
-        run: |
-          sudo ./alpine-make-vm-image \
-              --image-format raw \
-              --image-size 2G \
-              --partition \
-              --packages "$(cat gateway/packages)" \
-              --fs-skel-dir gateway/rootfs \
-              --fs-skel-chown root:root \
-              --script-chroot \
-              alpine-bios-part-$(date +%Y-%m-%d).raw -- ./gateway/configure.sh
+      # - name: Build image for x86_64 with BIOS mode and GPT
+      #   run: |
+      #     sudo ./alpine-make-vm-image \
+      #         --image-format raw \
+      #         --image-size 2G \
+      #         --partition \
+      #         --packages "$(cat gateway/packages)" \
+      #         --fs-skel-dir gateway/rootfs \
+      #         --fs-skel-chown root:root \
+      #         --script-chroot \
+      #         alpine-bios-part-$(date +%Y-%m-%d).raw -- ./gateway/configure.sh
 
       - name: Build image for x86_64 with UEFI mode
         run: |
@@ -48,6 +48,17 @@ jobs:
               --fs-skel-dir gateway/rootfs \
               --fs-skel-chown root:root \
               --script-chroot \
-              alpine-uefi-$(date +%Y-%m-%d).qcow2 -- ./gateway/configure.sh
+              alpine-uefi.qcow2 -- ./gateway/configure.sh
 
+      - name: Tar files
+        run: tar -czf alpine.tar.gz alpine-uefi.qcow2
 
+      - uses: actions/upload-artifact@v3
+        with:
+          path: alpine.tar.gz
+      
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: alpine.tar.gz
